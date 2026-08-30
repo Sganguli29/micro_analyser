@@ -1,0 +1,151 @@
+demo_id,file,true_label,source_image,w,h
+0,demo_crops/demo_000_ABS_ABS (415)__13.png,ABS,ABS (415),24,55
+1,demo_crops/demo_001_ABS_ABS (25)__0.png,ABS,ABS (25),178,244
+2,demo_crops/demo_002_ABS_ABS (47)__2.png,ABS,ABS (47),59,57
+3,demo_crops/demo_003_ABS_ABS (9)__1.png,ABS,ABS (9),132,230
+4,demo_crops/demo_004_ABS_ABS (187)__3.png,ABS,ABS (187),25,32
+5,demo_crops/demo_005_ABS_ABS (216)__1.png,ABS,ABS (216),122,96
+6,demo_crops/demo_006_ABS_ABS (2)__2.png,ABS,ABS (2),185,164
+7,demo_crops/demo_007_ABS_ABS (36)__3.png,ABS,ABS (36),77,43
+8,demo_crops/demo_008_ABS_ABS (392)__0.png,ABS,ABS (392),230,133
+9,demo_crops/demo_009_ABS_ABS (381)__6.png,ABS,ABS (381),57,47
+10,demo_crops/demo_010_ABS_ABS (55)__1.png,ABS,ABS (55),69,54
+11,demo_crops/demo_011_ABS_ABS (48)__0.png,ABS,ABS (48),49,69
+12,demo_crops/demo_012_ABS_ABS (29)__1.png,ABS,ABS (29),279,147
+13,demo_crops/demo_013_ABS_ABS (349)__1.png,ABS,ABS (349),41,122
+14,demo_crops/demo_014_ABS_ABS (98)__4.png,ABS,ABS (98),272,255
+15,demo_crops/demo_015_ABS_ABS (363)__1.png,ABS,ABS (363),183,224
+16,demo_crops/demo_016_ABS_ABS (29)__7.png,ABS,ABS (29),39,32
+17,demo_crops/demo_017_ABS_ABS (112)__3.png,ABS,ABS (112),244,241
+18,demo_crops/demo_018_ABS_ABS (72)__15.png,ABS,ABS (72),53,38
+19,demo_crops/demo_019_ABS_ABS (333)__0.png,ABS,ABS (333),125,131
+20,demo_crops/demo_020_ABS_ABS (389)__2.png,ABS,ABS (389),105,101
+21,demo_crops/demo_021_ABS_ABS (281)__1.png,ABS,ABS (281),29,55
+22,demo_crops/demo_022_ABS_ABS (36)__4.png,ABS,ABS (36),39,56
+23,demo_crops/demo_023_ABS_ABS (5)__17.png,ABS,ABS (5),42,28
+24,demo_crops/demo_024_ABS_ABS (129)__2.png,ABS,ABS (129),301,257
+25,demo_crops/demo_025_Nylon_Nylon (10)__4.png,Nylon,Nylon (10),161,116
+26,demo_crops/demo_026_Nylon_Nylon (428)__3.png,Nylon,Nylon (428),35,45
+27,demo_crops/demo_027_Nylon_Nylon (166)__5.png,Nylon,Nylon (166),35,52
+28,demo_crops/demo_028_Nylon_Nylon (108)__0.png,Nylon,Nylon (108),193,254
+29,demo_crops/demo_029_Nylon_Nylon (109)__11.png,Nylon,Nylon (109),47,49
+30,demo_crops/demo_030_Nylon_Nylon (41)__0.png,Nylon,Nylon (41),570,231
+31,demo_crops/demo_031_Nylon_Nylon (340)__6.png,Nylon,Nylon (340),26,30
+32,demo_crops/demo_032_Nylon_Nylon (527)__0.png,Nylon,Nylon (527),250,296
+33,demo_crops/demo_033_Nylon_Nylon (389)__9.png,Nylon,Nylon (389),97,97
+34,demo_crops/demo_034_Nylon_Nylon (140)__7.png,Nylon,Nylon (140),53,33
+35,demo_crops/demo_035_Nylon_Nylon (203)__1.png,Nylon,Nylon (203),61,63
+36,demo_crops/demo_036_Nylon_Nylon (292)__1.png,Nylon,Nylon (292),84,87
+37,demo_crops/demo_037_Nylon_Nylon (384)__7.png,Nylon,Nylon (384),72,32
+38,demo_crops/demo_038_Nylon_Nylon (508)__0.png,Nylon,Nylon (508),284,277
+39,demo_crops/demo_039_Nylon_Nylon (110)__15.png,Nylon,Nylon (110),25,25
+40,demo_crops/demo_040_Nylon_20250224-171340-247__15.png,Nylon,20250224-171340-247,47,44
+41,demo_crops/demo_041_Nylon_Nylon (134)__3.png,Nylon,Nylon (134),25,27
+42,demo_crops/demo_042_Nylon_Nylon (32)__21.png,Nylon,Nylon (32),41,28
+43,demo_crops/demo_043_Nylon_20250224-170028-522__11.png,Nylon,20250224-170028-522,34,83
+44,demo_crops/demo_044_Nylon_Nylon (347)__4.png,Nylon,Nylon (347),25,55
+45,demo_crops/demo_045_Nylon_Nylon (349)__2.png,Nylon,Nylon (349),87,30
+46,demo_crops/demo_046_Nylon_Nylon (502)__7.png,Nylon,Nylon (502),53,45
+47,demo_crops/demo_047_Nylon_Nylon (109)__8.png,Nylon,Nylon (109),68,52
+48,demo_crops/demo_048_Nylon_Nylon (474)__1.png,Nylon,Nylon (474),77,158
+49,demo_crops/demo_049_Nylon_Nylon (140)__17.png,Nylon,Nylon (140),28,24
+50,demo_crops/demo_050_PE_PE (427)__8.png,PE,PE (427),25,32
+51,demo_crops/demo_051_PE_PE (214)__10.png,PE,PE (214),41,38
+52,demo_crops/demo_052_PE_20250224-200933-442__18.png,PE,20250224-200933-442,62,122
+53,demo_crops/demo_053_PE_PE (247)__0.png,PE,PE (247),130,173
+54,demo_crops/demo_054_PE_20250224-201635-691__15.png,PE,20250224-201635-691,106,52
+55,demo_crops/demo_055_PE_PE (108)__4.png,PE,PE (108),41,32
+56,demo_crops/demo_056_PE_PE (129)__5.png,PE,PE (129),67,73
+57,demo_crops/demo_057_PE_PE (270)__1.png,PE,PE (270),25,42
+58,demo_crops/demo_058_PE_PE (76)__7.png,PE,PE (76),42,46
+59,demo_crops/demo_059_PE_PE (227)__4.png,PE,PE (227),32,25
+60,demo_crops/demo_060_PE_PE (18)__1.png,PE,PE (18),44,30
+61,demo_crops/demo_061_PE_PE (323)__4.png,PE,PE (323),32,43
+62,demo_crops/demo_062_PE_PE (208)__14.png,PE,PE (208),25,34
+63,demo_crops/demo_063_PE_PE (81)__0.png,PE,PE (81),53,57
+64,demo_crops/demo_064_PE_PE (163)__3.png,PE,PE (163),55,59
+65,demo_crops/demo_065_PE_PE (239)__12.png,PE,PE (239),31,47
+66,demo_crops/demo_066_PE_20250224-201646-251__35.png,PE,20250224-201646-251,28,30
+67,demo_crops/demo_067_PE_PE (242)__2.png,PE,PE (242),35,100
+68,demo_crops/demo_068_PE_PE (321)__3.png,PE,PE (321),30,28
+69,demo_crops/demo_069_PE_PE (356)__4.png,PE,PE (356),29,31
+70,demo_crops/demo_070_PE_PE (73)__21.png,PE,PE (73),27,25
+71,demo_crops/demo_071_PE_20250224-201752-973__5.png,PE,20250224-201752-973,94,140
+72,demo_crops/demo_072_PE_PE (155)__5.png,PE,PE (155),45,47
+73,demo_crops/demo_073_PE_PE (245)__3.png,PE,PE (245),33,69
+74,demo_crops/demo_074_PE_20250224-201530-681__11.png,PE,20250224-201530-681,127,112
+75,demo_crops/demo_075_PET_PET (89)__2.png,PET,PET (89),102,158
+76,demo_crops/demo_076_PET_PET (196)__0.png,PET,PET (196),422,272
+77,demo_crops/demo_077_PET_PET (35)__0.png,PET,PET (35),460,462
+78,demo_crops/demo_078_PET_20250224-185129-655__5.png,PET,20250224-185129-655,120,82
+79,demo_crops/demo_079_PET_PET (167)__1.png,PET,PET (167),54,113
+80,demo_crops/demo_080_PET_20250224-183626-130__3.png,PET,20250224-183626-130,212,231
+81,demo_crops/demo_081_PET_PET (189)__0.png,PET,PET (189),358,270
+82,demo_crops/demo_082_PET_20250224-185129-655__1.png,PET,20250224-185129-655,468,451
+83,demo_crops/demo_083_PET_PET (188)__1.png,PET,PET (188),69,93
+84,demo_crops/demo_084_PET_PET (62)__0.png,PET,PET (62),250,175
+85,demo_crops/demo_085_PET_20250224-183117-675__7.png,PET,20250224-183117-675,145,142
+86,demo_crops/demo_086_PET_PET (141)__0.png,PET,PET (141),420,373
+87,demo_crops/demo_087_PET_20250224-183117-675__3.png,PET,20250224-183117-675,249,310
+88,demo_crops/demo_088_PET_PET (104)__1.png,PET,PET (104),98,102
+89,demo_crops/demo_089_PET_20250224-183117-675__12.png,PET,20250224-183117-675,57,41
+90,demo_crops/demo_090_PET_20250224-184430-205__0.png,PET,20250224-184430-205,636,362
+91,demo_crops/demo_091_PET_PET (57)__0.png,PET,PET (57),303,321
+92,demo_crops/demo_092_PET_PET (189)__3.png,PET,PET (189),39,53
+93,demo_crops/demo_093_PET_PET (183)__0.png,PET,PET (183),640,306
+94,demo_crops/demo_094_PET_20250224-183117-675__4.png,PET,20250224-183117-675,234,162
+95,demo_crops/demo_095_PET_PET (114)__1.png,PET,PET (114),52,72
+96,demo_crops/demo_096_PET_20250224-183117-675__6.png,PET,20250224-183117-675,98,233
+97,demo_crops/demo_097_PET_20250224-183117-675__0.png,PET,20250224-183117-675,301,318
+98,demo_crops/demo_098_PET_20250224-182647-253__1.png,PET,20250224-182647-253,146,274
+99,demo_crops/demo_099_PET_20250224-184430-205__1.png,PET,20250224-184430-205,314,635
+100,demo_crops/demo_100_PS_PS (201)__3.png,PS,PS (201),33,57
+101,demo_crops/demo_101_PS_PS (159)__1.png,PS,PS (159),118,141
+102,demo_crops/demo_102_PS_PS (150)__1.png,PS,PS (150),103,87
+103,demo_crops/demo_103_PS_20250224-194401-263__7.png,PS,20250224-194401-263,63,61
+104,demo_crops/demo_104_PS_20250224-194631-346__2.png,PS,20250224-194631-346,197,214
+105,demo_crops/demo_105_PS_PS (85)__1.png,PS,PS (85),177,187
+106,demo_crops/demo_106_PS_PS (56)__2.png,PS,PS (56),61,77
+107,demo_crops/demo_107_PS_20250224-194150-236__0.png,PS,20250224-194150-236,180,379
+108,demo_crops/demo_108_PS_PS (150)__0.png,PS,PS (150),112,103
+109,demo_crops/demo_109_PS_PS (220)__3.png,PS,PS (220),70,49
+110,demo_crops/demo_110_PS_20250224-194620-882__0.png,PS,20250224-194620-882,739,705
+111,demo_crops/demo_111_PS_20250224-194159-899__8.png,PS,20250224-194159-899,74,117
+112,demo_crops/demo_112_PS_PS (61)__2.png,PS,PS (61),75,151
+113,demo_crops/demo_113_PS_PS (207)__2.png,PS,PS (207),49,45
+114,demo_crops/demo_114_PS_PS (159)__3.png,PS,PS (159),70,73
+115,demo_crops/demo_115_PS_PS (159)__9.png,PS,PS (159),25,24
+116,demo_crops/demo_116_PS_PS (219)__1.png,PS,PS (219),100,64
+117,demo_crops/demo_117_PS_20250224-194159-899__5.png,PS,20250224-194159-899,133,187
+118,demo_crops/demo_118_PS_20250224-194401-263__5.png,PS,20250224-194401-263,84,93
+119,demo_crops/demo_119_PS_PS (199)__1.png,PS,PS (199),112,127
+120,demo_crops/demo_120_PS_PS (159)__0.png,PS,PS (159),96,125
+121,demo_crops/demo_121_PS_PS (214)__5.png,PS,PS (214),45,47
+122,demo_crops/demo_122_PS_PS (201)__1.png,PS,PS (201),58,64
+123,demo_crops/demo_123_PS_20250224-200057-622__9.png,PS,20250224-200057-622,89,52
+124,demo_crops/demo_124_PS_20250224-200343-481__10.png,PS,20250224-200343-481,60,62
+125,demo_crops/demo_125_PVC_PVC (382)__29.png,PVC,PVC (382),27,30
+126,demo_crops/demo_126_PVC_20250224-174517-804__27.png,PVC,20250224-174517-804,29,38
+127,demo_crops/demo_127_PVC_PVC (59)__5.png,PVC,PVC (59),140,89
+128,demo_crops/demo_128_PVC_20250224-174500-124__26.png,PVC,20250224-174500-124,44,44
+129,demo_crops/demo_129_PVC_20250224-174704-638__1.png,PVC,20250224-174704-638,125,112
+130,demo_crops/demo_130_PVC_PVC (364)__7.png,PVC,PVC (364),30,54
+131,demo_crops/demo_131_PVC_PVC (273)__6.png,PVC,PVC (273),24,27
+132,demo_crops/demo_132_PVC_20250224-174231-912__28.png,PVC,20250224-174231-912,28,28
+133,demo_crops/demo_133_PVC_PVC (90)__23.png,PVC,PVC (90),30,43
+134,demo_crops/demo_134_PVC_PVC (341)__31.png,PVC,PVC (341),27,25
+135,demo_crops/demo_135_PVC_PVC (5)__3.png,PVC,PVC (5),219,185
+136,demo_crops/demo_136_PVC_PVC (307)__9.png,PVC,PVC (307),27,28
+137,demo_crops/demo_137_PVC_20250224-174231-912__5.png,PVC,20250224-174231-912,93,133
+138,demo_crops/demo_138_PVC_20250224-174517-804__20.png,PVC,20250224-174517-804,46,52
+139,demo_crops/demo_139_PVC_PVC (28)__6.png,PVC,PVC (28),77,76
+140,demo_crops/demo_140_PVC_PVC (274)__0.png,PVC,PVC (274),35,72
+141,demo_crops/demo_141_PVC_20250224-174517-804__8.png,PVC,20250224-174517-804,69,101
+142,demo_crops/demo_142_PVC_PVC (72)__2.png,PVC,PVC (72),127,188
+143,demo_crops/demo_143_PVC_PVC (277)__5.png,PVC,PVC (277),40,40
+144,demo_crops/demo_144_PVC_20250224-174930-546__22.png,PVC,20250224-174930-546,38,34
+145,demo_crops/demo_145_PVC_PVC (16)__21.png,PVC,PVC (16),46,26
+146,demo_crops/demo_146_PVC_PVC (94)__14.png,PVC,PVC (94),73,118
+147,demo_crops/demo_147_PVC_20250224-173545-405__21.png,PVC,20250224-173545-405,52,40
+148,demo_crops/demo_148_PVC_PVC (45)__2.png,PVC,PVC (45),65,76
+149,demo_crops/demo_149_PVC_20250224-174216-008__35.png,PVC,20250224-174216-008,30,27

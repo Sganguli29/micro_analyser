@@ -1,0 +1,38 @@
+{
+  "dataset": "sombsuk/dataset_microplastic (Rermborirak et al., 2025)",
+  "license": "CC BY-NC-ND 4.0",
+  "random_seed": 42,
+  "classes": [
+    "ABS",
+    "Nylon",
+    "PE",
+    "PET",
+    "PS",
+    "PVC"
+  ],
+  "feature_table_sha256": "56e8cce82b95718879c911f16a9530ebffa08745f71579aed46c1cf10b499d91",
+  "split_counts": {
+    "train": 3406,
+    "val": 877,
+    "test": 1397
+  },
+  "block_costs": {
+    "shape": 5.88,
+    "intensity": 2.84,
+    "colour": 2.14,
+    "texture": 4.89,
+    "frequency": 1.0
+  },
+  "block_weights": {
+    "shape": 0.2001,
+    "intensity": 0.2106,
+    "colour": 0.3544,
+    "texture": 0.4867,
+    "frequency": 0.5902
+  },
+  "default_tau": 0.9,
+  "default_lambda": 0.01,
+  "first_block_distribution": {
+    "frequency": 1397
+  }
+}

@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptive Information Selection — Microplastic Polymer Classification</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-subtle: #182234;
+      --bg-card-hover: #334155;
+      --border-color: #334155;
+      --border-accent: #0ea5e9;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a855f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 18px;
+    }
+    .header-tag {
+      display: inline-block;
+      background: rgba(14, 165, 233, 0.15);
+      color: var(--accent-blue);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-top: 4px;
+      max-width: 950px;
+    }
+
+    /* Layout Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Particle Picker */
+    .preview-box {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .preview-box img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+    .preview-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .upload-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 14px;
+      background: var(--bg-card-subtle);
+      transition: border-color 0.2s;
+    }
+    .upload-zone:hover {
+      border-color: var(--accent-blue);
+    }
+    .upload-zone input {
+      display: none;
+    }
+
+    /* Filter Tabs */
+    .catalogue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .filter-btn {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover {
+      border-color: var(--accent-blue);
+      color: #ffffff;
+    }
+    .filter-btn.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .demo-thumb {
+      aspect-ratio: 1;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background: var(--bg-dark);
+      cursor: pointer;
+      overflow: hidden;
+      padding: 2px;
+      transition: all 0.15s;
+    }
+    .demo-thumb:hover {
+      border-color: var(--text-secondary);
+    }
+    .demo-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .demo-thumb.active {
+      border: 2px solid var(--accent-blue);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    }
+
+    /* Controls */
+    .control-group {
+      margin-bottom: 16px;
+    }
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .slider {
+      width: 100%;
+      accent-color: var(--accent-blue);
+      cursor: pointer;
+    }
+    .toggle-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: var(--bg-dark);
+      padding: 4px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .toggle-btn.active {
+      background: var(--bg-card-hover);
+      color: #ffffff;
+    }
+
+    .btn-classify {
+      width: 100%;
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+    .btn-classify:hover {
+      background: #0369a1;
+    }
+    .btn-classify:disabled {
+      background: #334155;
+      cursor: not-allowed;
+      color: #64748b;
+    }
+
+    /* Timeline Section */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .step-card {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 16px;
+      animation: fadeIn 0.3s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .step-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .step-stats {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 14px;
+    }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 16px;
+    }
+
+    /* Score bars */
+    .score-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .score-block-name {
+      width: 80px;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    .score-bar-container {
+      flex: 1;
+      height: 16px;
+      background: var(--bg-dark);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 0 8px;
+      position: relative;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: #475569;
+      border-radius: 3px;
+      transition: width 0.4s ease-out;
+    }
+    .score-bar-fill.chosen {
+      background: var(--accent-emerald);
+    }
+    .score-val {
+      width: 45px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .score-val.chosen {
+      color: var(--accent-emerald);
+    }
+
+    /* Posterior Bars */
+    .posterior-chart {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      align-items: flex-end;
+      height: 80px;
+      background: var(--bg-dark);
+      padding: 8px 6px 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+    }
+    .posterior-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .posterior-fill {
+      width: 100%;
+      background: #0284c7;
+      border-radius: 2px 2px 0 0;
+      min-height: 2px;
+      transition: height 0.4s ease-out;
+    }
+    .posterior-fill.max {
+      background: var(--accent-emerald);
+    }
+    .posterior-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Result Panel */
+    .result-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .result-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .metric-tile {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+    }
+    .metric-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .metric-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 4px;
+    }
+    .badge-correct {
+      display: inline-block;
+      font-size: 11px;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent-emerald);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--accent-emerald);
+      margin-left: 6px;
+    }
+    .badge-incorrect {
+      display: inline-block;
+      font-size: 11px;
+      background: rgba(244, 63, 94, 0.2);
+      color: var(--accent-rose);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--accent-rose);
+      margin-left: 6px;
+    }
+
+    .blocks-breakdown {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 10px 14px;
+      background: var(--bg-card-subtle);
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+    .block-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+    .block-pill.used {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .block-pill.skipped {
+      background: rgba(100, 116, 139, 0.15);
+      color: var(--text-muted);
+      border: 1px dashed rgba(100, 116, 139, 0.4);
+      text-decoration: line-through;
+    }
+
+    /* Comparison Strip */
+    .comp-strip {
+      margin-top: 14px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 18px;
+    }
+    .btn-comp {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--accent-blue);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 14px;
+      transition: all 0.2s;
+    }
+    .btn-comp:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-blue);
+    }
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .comp-col {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 14px;
+    }
+    .comp-header {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-color);
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    footer a {
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .alert-box {
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid var(--accent-rose);
+      color: #fecdd3;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="header-tag">Live Research Demonstration</div>
+    <h1>Adaptive Information Selection in Microplastic Polymer Classification</h1>
+    <p class="subtitle">
+      Instead of evaluating every computer vision block, this system actively maintains a Bayesian posterior over polymer classes and dynamically selects the measurement that maximizes Expected Information Gain per unit cost (EIG / Cost), stopping as soon as confidence is reached.
+    </p>
+  </header>
+
+  <div id="errorAlert" class="alert-box"></div>
+
+  <div class="grid-2">
+    <!-- Left Column: Controls & Particle Selection -->
+    <div>
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-title">Selected Microplastic Particle</div>
+        
+        <div class="preview-box">
+          <img id="particlePreview" src="" alt="Selected Particle Crop">
+        </div>
+
+        <div class="preview-meta">
+          <span id="particleMetaDim">Dim: -- x -- px</span>
+          <span id="particleMetaSource">Polymer: --</span>
+        </div>
+
+        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+          <input type="file" id="fileInput" accept="image/*" onchange="handleFileUpload(event)">
+          <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Drop custom particle crop here or click to upload</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Min 24x24 px (RGB fluorescence)</div>
+        </div>
+
+        <div class="catalogue-header">
+          <div style="font-size: 12px; font-weight: 700; color: var(--text-secondary);">Test Particles Catalogue</div>
+          <div id="catalogueCount" style="font-size: 11px; color: var(--text-muted);">150 particles</div>
+        </div>
+
+        <!-- Polymer Filter Tabs -->
+        <div class="filter-tabs">
+          <button class="filter-btn active" onclick="filterByPolymer('ALL')">All (150)</button>
+          <button class="filter-btn" onclick="filterByPolymer('ABS')">ABS</button>
+          <button class="filter-btn" onclick="filterByPolymer('Nylon')">Nylon</button>
+          <button class="filter-btn" onclick="filterByPolymer('PE')">PE</button>
+          <button class="filter-btn" onclick="filterByPolymer('PET')">PET</button>
+          <button class="filter-btn" onclick="filterByPolymer('PS')">PS</button>
+          <button class="filter-btn" onclick="filterByPolymer('PVC')">PVC</button>
+        </div>
+
+        <div class="demo-grid" id="demoGrid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Policy Parameters</div>
+        
+        <div class="control-group">
+          <div class="control-label-row">
+            <span>Confidence Threshold (&tau;)</span>
+            <span id="tauValDisplay" style="color: var(--accent-blue);">0.90</span>
+          </div>
+          <input type="range" id="tauSlider" class="slider" min="0.40" max="0.99" step="0.01" value="0.90" oninput="updateTau(this.value)">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label-row">
+            <span>Acquisition Policy</span>
+          </div>
+          <div class="toggle-group">
+            <button class="toggle-btn active" id="policyAdaptive" onclick="setPolicy('adaptive')">Adaptive (EIG / Cost)</button>
+            <button class="toggle-btn" id="policyFixed" onclick="setPolicy('fixed')">Fixed Best-First</button>
+          </div>
+        </div>
+
+        <button class="btn-classify" id="btnClassify" onclick="runClassification()">Classify Particle</button>
+      </div>
+    </div>
+
+    <!-- Right Column: Step-by-Step Decision Timeline -->
+    <div>
+      <div class="card">
+        <div class="card-title">
+          <span>Sequential Decision Trace</span>
+          <span id="timelineStatus" style="font-size: 12px; font-weight: 600; color: var(--accent-blue);">Ready</span>
+        </div>
+
+        <div id="timeline" class="timeline-container">
+          <div style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 40px 0;">
+            Select a particle and click <strong>Classify Particle</strong> to reveal sequential information selection.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Results Panel -->
+  <div class="result-card" id="resultCard" style="display: none;">
+    <div class="card-title">Classification Decision & Cost Analysis</div>
+    
+    <div class="result-summary-grid">
+      <div class="metric-tile">
+        <div class="metric-title">Predicted Polymer</div>
+        <div class="metric-value">
+          <span id="resPredicted">--</span>
+          <span id="resTrueBadge"></span>
+        </div>
+      </div>
+
+      <div class="metric-tile">
+        <div class="metric-title">Posterior Confidence</div>
+        <div class="metric-value" id="resConfidence" style="color: var(--accent-emerald);">--</div>
+      </div>
+
+      <div class="metric-tile">
+        <div class="metric-title">Cost Paid vs All-Blocks</div>
+        <div class="metric-value" id="resCost">-- / --</div>
+      </div>
+
+      <div class="metric-tile">
+        <div class="metric-title">Cost Savings</div>
+        <div class="metric-value" id="resSavings" style="color: var(--accent-blue);">--%</div>
+      </div>
+    </div>
+
+    <div class="blocks-breakdown">
+      <div><strong>Evaluated:</strong> <span id="resUsedBlocks"></span></div>
+      <div style="margin-left: 20px;"><strong>Skipped:</strong> <span id="resSkippedBlocks"></span></div>
+      <div style="margin-left: auto; font-size: 12px; color: var(--text-muted);">
+        Stopping criterion: <strong id="resStopReason" style="color: #ffffff;">--</strong>
+      </div>
+    </div>
+
+    <!-- Comparison Strip -->
+    <div class="comp-strip">
+      <button class="btn-comp" id="btnCompare" onclick="runSideBySideComparison()">Compare Adaptive vs Fixed on This Particle</button>
+      
+      <div class="comp-grid" id="compGrid" style="display: none;">
+        <div class="comp-col" style="border-color: var(--accent-emerald);">
+          <div class="comp-header">
+            <span style="color: var(--accent-emerald);">Adaptive Policy</span>
+            <span id="compAdaptiveCost">Cost: --</span>
+          </div>
+          <div id="compAdaptiveSummary" style="font-size: 12px; color: var(--text-secondary);"></div>
+        </div>
+
+        <div class="comp-col" style="border-color: var(--accent-blue);">
+          <div class="comp-header">
+            <span style="color: var(--accent-blue);">Fixed Best-First Policy</span>
+            <span id="compFixedCost">Cost: --</span>
+          </div>
+          <div id="compFixedSummary" style="font-size: 12px; color: var(--text-secondary);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Dataset Attribution & Citation:</strong><br>
+    Nile Red fluorescence microplastic dataset from <em>Rermborirak et al. (2025), Journal of Hazardous Materials Advances 19, 100787</em>.<br>
+    Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</a>.
+    Non-commercial and no-derivatives restrictions apply.
+  </footer>
+</div>
+
+<script>
+  const API_BASE = "";
+  const CLASSES = ["ABS", "Nylon", "PE", "PET", "PS", "PVC"];
+  
+  let currentDemoId = 0;
+  let currentFile = null;
+  let currentPolicy = "adaptive";
+  let currentTau = 0.90;
+  let currentFilter = "ALL";
+  let demoCatalogue = [];
+  let metaData = null;
+  let isRunning = false;
+
+  async function init() {
+    try {
+      const metaRes = await fetch(`${API_BASE}/api/meta`);
+      metaData = await metaRes.json();
+      
+      const demoRes = await fetch(`${API_BASE}/api/demo`);
+      demoCatalogue = await demoRes.json();
+
+      renderDemoGrid();
+      if (demoCatalogue.length > 0) {
+        selectDemoParticle(demoCatalogue[0].demo_id);
+      }
+    } catch (e) {
+      showError("Failed to initialize API. Is backend running? " + e.message);
+    }
+  }
+
+  function showError(msg) {
+    const el = document.getElementById("errorAlert");
+    el.innerText = msg;
+    el.style.display = "block";
+  }
+  function clearError() {
+    document.getElementById("errorAlert").style.display = "none";
+  }
+
+  function filterByPolymer(polymer) {
+    currentFilter = polymer;
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.innerText.startsWith(polymer));
+    });
+    renderDemoGrid();
+  }
+
+  function renderDemoGrid() {
+    const grid = document.getElementById("demoGrid");
+    grid.innerHTML = "";
+    
+    const filtered = currentFilter === "ALL" 
+      ? demoCatalogue 
+      : demoCatalogue.filter(d => d.true_label === currentFilter);
+
+    document.getElementById("catalogueCount").innerText = `${filtered.length} particles`;
+
+    filtered.forEach(item => {
+      const div = document.createElement("div");
+      div.className = `demo-thumb ${item.demo_id === currentDemoId ? "active" : ""}`;
+      div.id = `demo-thumb-${item.demo_id}`;
+      div.title = `${item.true_label} (${item.w}x${item.h}px)`;
+      div.onclick = () => selectDemoParticle(item.demo_id);
+      
+      const img = document.createElement("img");
+      img.src = `${API_BASE}/${item.file}`;
+      img.alt = item.true_label;
+      div.appendChild(img);
+      grid.appendChild(div);
+    });
+  }
+
+  function selectDemoParticle(demoId) {
+    currentDemoId = demoId;
+    currentFile = null;
+    clearError();
+
+    document.querySelectorAll(".demo-thumb").forEach(t => t.classList.remove("active"));
+    const activeThumb = document.getElementById(`demo-thumb-${demoId}`);
+    if (activeThumb) activeThumb.classList.add("active");
+
+    const item = demoCatalogue.find(d => d.demo_id === demoId);
+    if (item) {
+      document.getElementById("particlePreview").src = `${API_BASE}/${item.file}`;
+      document.getElementById("particleMetaDim").innerText = `Dim: ${item.w} x ${item.h} px`;
+      document.getElementById("particleMetaSource").innerText = `Polymer: ${item.true_label} (${item.source_image})`;
+    }
+
+    // Reset timeline & results
+    document.getElementById("resultCard").style.display = "none";
+    document.getElementById("compGrid").style.display = "none";
+    document.getElementById("timeline").innerHTML = `
+      <div style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 40px 0;">
+        Ready to analyze. Click <strong>Classify Particle</strong> to start sequential selection.
+      </div>
+    `;
+  }
+
+  function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    currentFile = file;
+    currentDemoId = null;
+    clearError();
+
+    document.querySelectorAll(".demo-thumb").forEach(t => t.classList.remove("active"));
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById("particlePreview").src = e.target.result;
+      document.getElementById("particleMetaDim").innerText = `Uploaded File: ${file.name}`;
+      document.getElementById("particleMetaSource").innerText = "Custom Particle";
+    };
+    reader.readAsDataURL(file);
+
+    document.getElementById("resultCard").style.display = "none";
+    document.getElementById("compGrid").style.display = "none";
+    document.getElementById("timeline").innerHTML = `
+      <div style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 40px 0;">
+        Custom particle loaded. Click <strong>Classify Particle</strong>.
+      </div>
+    `;
+  }
+
+  function updateTau(val) {
+    currentTau = parseFloat(val);
+    document.getElementById("tauValDisplay").innerText = currentTau.toFixed(2);
+  }
+
+  function setPolicy(p) {
+    currentPolicy = p;
+    document.getElementById("policyAdaptive").classList.toggle("active", p === "adaptive");
+    document.getElementById("policyFixed").classList.toggle("active", p === "fixed");
+  }
+
+  async function fetchClassification(policyName, tauVal) {
+    let res;
+    if (currentFile) {
+      const formData = new FormData();
+      formData.append("file", currentFile);
+      formData.append("policy", policyName);
+      formData.append("tau", tauVal);
+      formData.append("lambda_", 0.01);
+      res = await fetch(`${API_BASE}/api/classify`, { method: "POST", body: formData });
+    } else {
+      res = await fetch(`${API_BASE}/api/classify`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          demo_id: currentDemoId,
+          policy: policyName,
+          tau: tauVal,
+          lambda_: 0.01
+        })
+      });
+    }
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.detail || "Classification failed");
+    }
+    return await res.json();
+  }
+
+  async function runClassification() {
+    if (isRunning) return;
+    isRunning = true;
+    clearError();
+
+    const btn = document.getElementById("btnClassify");
+    btn.disabled = true;
+    document.getElementById("timelineStatus").innerText = "Evaluating Steps...";
+    document.getElementById("resultCard").style.display = "none";
+    document.getElementById("compGrid").style.display = "none";
+
+    const timeline = document.getElementById("timeline");
+    timeline.innerHTML = "";
+
+    try {
+      const trace = await fetchClassification(currentPolicy, currentTau);
+      
+      // Step-by-step progressive reveal with ~700ms delay
+      for (let i = 0; i < trace.steps.length; i++) {
+        const stepData = trace.steps[i];
+        renderStep(stepData, trace.prior, i + 1, trace.steps.length);
+        if (i < trace.steps.length - 1) {
+          await new Promise(r => setTimeout(r, 700));
+        }
+      }
+
+      // Reveal Final Results
+      renderFinalResult(trace.final);
+      document.getElementById("timelineStatus").innerText = `Completed (${trace.elapsed_ms} ms)`;
+    } catch (e) {
+      showError(e.message);
+      document.getElementById("timelineStatus").innerText = "Error";
+    } finally {
+      btn.disabled = false;
+      isRunning = false;
+    }
+  }
+
+  function renderStep(step, prior, stepNum, totalSteps) {
+    const timeline = document.getElementById("timeline");
+    const div = document.createElement("div");
+    div.className = "step-card";
+
+    // Max score for bar normalization
+    const maxScore = Math.max(...Object.values(step.scores), 0.01);
+
+    let scoreBarsHtml = "";
+    for (const [block, sc] of Object.entries(step.scores)) {
+      const isChosen = block === step.chosen_block;
+      const barWidth = Math.min(100, Math.max(4, (sc / maxScore) * 100));
+      scoreBarsHtml += `
+        <div class="score-row">
+          <span class="score-block-name">${block}</span>
+          <div class="score-bar-container">
+            <div class="score-bar-fill ${isChosen ? 'chosen' : ''}" style="width: ${barWidth}%;"></div>
+          </div>
+          <span class="score-val ${isChosen ? 'chosen' : ''}">${sc.toFixed(3)}</span>
+        </div>
+      `;
+    }
+
+    let posteriorColsHtml = "";
+    step.posterior.forEach((p, idx) => {
+      const isMax = p === Math.max(...step.posterior);
+      const heightPct = Math.max(6, p * 100);
+      posteriorColsHtml += `
+        <div class="posterior-col">
+          <div class="posterior-fill ${isMax ? 'max' : ''}" style="height: ${heightPct}%;"></div>
+          <div class="posterior-label">${CLASSES[idx]}</div>
+        </div>
+      `;
+    });
+
+    div.innerHTML = `
+      <div class="step-header">
+        <div>
+          <span class="step-badge">Step ${step.step}</span>
+          <strong style="margin-left: 8px; font-size: 13px; color: #ffffff;">Evaluated: ${step.chosen_block}</strong>
+          <span style="font-size: 11px; color: var(--text-muted); margin-left: 6px;">(cost: ${step.cost_paid})</span>
+        </div>
+        <div class="step-stats">
+          <span>Entropy: <strong>${step.entropy}</strong></span>
+          <span>Confidence: <strong>${(step.confidence * 100).toFixed(1)}%</strong></span>
+          <span>Cumulative Cost: <strong>${step.cumulative_cost}</strong></span>
+        </div>
+      </div>
+      <div class="step-grid">
+        <div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase;">
+            Candidate Information Value (EIG / Cost)
+          </div>
+          ${scoreBarsHtml}
+        </div>
+        <div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase;">
+            Class Posterior Distribution
+          </div>
+          <div class="posterior-chart">
+            ${posteriorColsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    timeline.appendChild(div);
+  }
+
+  function renderFinalResult(finalData) {
+    const card = document.getElementById("resultCard");
+    card.style.display = "block";
+
+    document.getElementById("resPredicted").innerText = finalData.predicted_class;
+    document.getElementById("resConfidence").innerText = `${(finalData.confidence * 100).toFixed(1)}%`;
+    document.getElementById("resCost").innerText = `${finalData.total_cost} / ${finalData.all_blocks_cost}`;
+    
+    const savings = Math.max(0, ((1 - finalData.total_cost / finalData.all_blocks_cost) * 100)).toFixed(1);
+    document.getElementById("resSavings").innerText = `${savings}%`;
+
+    // True Label Badge (revealed strictly after prediction)
+    const trueBadge = document.getElementById("resTrueBadge");
+    if (finalData.true_label) {
+      const isCorrect = finalData.predicted_class === finalData.true_label;
+      trueBadge.innerHTML = `<span class="${isCorrect ? 'badge-correct' : 'badge-incorrect'}">True: ${finalData.true_label} (${isCorrect ? 'CORRECT' : 'INCORRECT'})</span>`;
+    } else {
+      trueBadge.innerHTML = "";
+    }
+
+    // Blocks
+    const usedEl = document.getElementById("resUsedBlocks");
+    usedEl.innerHTML = finalData.blocks_used.map(b => `<span class="block-pill used">${b}</span>`).join("");
+
+    const skippedEl = document.getElementById("resSkippedBlocks");
+    skippedEl.innerHTML = finalData.blocks_skipped.length > 0 
+      ? finalData.blocks_skipped.map(b => `<span class="block-pill skipped">${b}</span>`).join("")
+      : "<span style='color: var(--text-muted);'>None (evaluated all)</span>";
+
+    const reasonMap = {
+      "confidence_threshold": `Reached target confidence &ge; ${currentTau.toFixed(2)}`,
+      "low_value_of_information": "Information gain below cost threshold (&lambda;)",
+      "blocks_exhausted": "All feature blocks evaluated"
+    };
+    document.getElementById("resStopReason").innerText = reasonMap[finalData.stopped_because] || finalData.stopped_because;
+  }
+
+  async function runSideBySideComparison() {
+    clearError();
+    const grid = document.getElementById("compGrid");
+    grid.style.display = "grid";
+
+    document.getElementById("compAdaptiveSummary").innerHTML = "Running adaptive policy...";
+    document.getElementById("compFixedSummary").innerHTML = "Running fixed best-first policy...";
+
+    try {
+      const [adTrace, fxTrace] = await Promise.all([
+        fetchClassification("adaptive", currentTau),
+        fetchClassification("fixed", currentTau)
+      ]);
+
+      document.getElementById("compAdaptiveCost").innerText = `Cost: ${adTrace.final.total_cost} (${adTrace.final.blocks_used.length} blocks)`;
+      document.getElementById("compFixedCost").innerText = `Cost: ${fxTrace.final.total_cost} (${fxTrace.final.blocks_used.length} blocks)`;
+
+      const adSaving = ((1 - adTrace.final.total_cost / adTrace.final.all_blocks_cost) * 100).toFixed(1);
+      const fxSaving = ((1 - fxTrace.final.total_cost / fxTrace.final.all_blocks_cost) * 100).toFixed(1);
+
+      document.getElementById("compAdaptiveSummary").innerHTML = `
+        <div style="margin-bottom: 6px;"><strong>Predicted:</strong> ${adTrace.final.predicted_class} (conf: ${(adTrace.final.confidence*100).toFixed(1)}%)</div>
+        <div style="margin-bottom: 6px;"><strong>Sequence:</strong> ${adTrace.final.blocks_used.join(" &rarr; ")}</div>
+        <div style="color: var(--accent-emerald); font-weight: 700;">Cost Saving: ${adSaving}% vs All-Blocks</div>
+      `;
+
+      document.getElementById("compFixedSummary").innerHTML = `
+        <div style="margin-bottom: 6px;"><strong>Predicted:</strong> ${fxTrace.final.predicted_class} (conf: ${(fxTrace.final.confidence*100).toFixed(1)}%)</div>
+        <div style="margin-bottom: 6px;"><strong>Sequence:</strong> ${fxTrace.final.blocks_used.join(" &rarr; ")}</div>
+        <div style="color: var(--accent-blue); font-weight: 700;">Cost Saving: ${fxSaving}% vs All-Blocks</div>
+      `;
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  window.onload = init;
+</script>
+
+</body>
+</html>

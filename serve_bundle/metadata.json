@@ -1,0 +1,195 @@
+{
+  "classes": [
+    "ABS",
+    "Nylon",
+    "PE",
+    "PET",
+    "PS",
+    "PVC"
+  ],
+  "log_prior": [
+    -1.8233755768033897,
+    -1.7346989210202048,
+    -1.6891625991072488,
+    -2.097812420549552,
+    -1.6859879932836392,
+    -1.7754515888115878
+  ],
+  "prior": [
+    0.16147974163241338,
+    0.17645331767469172,
+    0.18467410452143276,
+    0.12272460364063417,
+    0.18526130358191426,
+    0.16940692894891368
+  ],
+  "block_costs": {
+    "shape": 5.88,
+    "intensity": 2.84,
+    "colour": 2.14,
+    "texture": 4.89,
+    "frequency": 1.0
+  },
+  "block_weights": {
+    "shape": 0.2001,
+    "intensity": 0.2106,
+    "colour": 0.3544,
+    "texture": 0.4867,
+    "frequency": 0.5902
+  },
+  "block_feature_names": {
+    "shape": [
+      "shape_area",
+      "shape_perimeter",
+      "shape_eccentricity",
+      "shape_solidity",
+      "shape_extent",
+      "shape_circularity",
+      "shape_aspect_ratio",
+      "shape_equivalent_diameter"
+    ],
+    "intensity": [
+      "intensity_mean",
+      "intensity_std",
+      "intensity_min",
+      "intensity_max",
+      "intensity_p5",
+      "intensity_p25",
+      "intensity_p50",
+      "intensity_p75",
+      "intensity_p95",
+      "intensity_skew"
+    ],
+    "colour": [
+      "colour_r_mean",
+      "colour_r_std",
+      "colour_g_mean",
+      "colour_g_std",
+      "colour_b_mean",
+      "colour_b_std",
+      "colour_r_frac",
+      "colour_g_frac",
+      "colour_b_frac",
+      "colour_h_mean",
+      "colour_h_std",
+      "colour_s_mean",
+      "colour_s_std",
+      "colour_v_mean",
+      "colour_v_std"
+    ],
+    "texture": [
+      "texture_glcm_contrast_mean",
+      "texture_glcm_contrast_std",
+      "texture_glcm_dissimilarity_mean",
+      "texture_glcm_dissimilarity_std",
+      "texture_glcm_homogeneity_mean",
+      "texture_glcm_homogeneity_std",
+      "texture_glcm_energy_mean",
+      "texture_glcm_energy_std",
+      "texture_glcm_correlation_mean",
+      "texture_glcm_correlation_std",
+      "texture_glcm_ASM_mean",
+      "texture_glcm_ASM_std",
+      "texture_lbp_bin_0",
+      "texture_lbp_bin_1",
+      "texture_lbp_bin_2",
+      "texture_lbp_bin_3",
+      "texture_lbp_bin_4",
+      "texture_lbp_bin_5",
+      "texture_lbp_bin_6",
+      "texture_lbp_bin_7",
+      "texture_lbp_bin_8",
+      "texture_lbp_bin_9"
+    ],
+    "frequency": [
+      "freq_band_0",
+      "freq_band_1",
+      "freq_band_2",
+      "freq_band_3",
+      "freq_band_4",
+      "freq_band_5",
+      "freq_high_low_ratio"
+    ]
+  },
+  "block_descriptions": {
+    "shape": "Morphological descriptors (area, perimeter, circularity, eccentricity, aspect ratio, solidity)",
+    "intensity": "Greyscale statistics, percentiles (5, 25, 50, 75, 95), and distribution skewness",
+    "colour": "Per-channel RGB mean/std, channel ratio fractions, and HSV colour space statistics",
+    "texture": "GLCM co-occurrence matrix (32 levels, d=[1,3], 4 angles) properties and uniform LBP histogram",
+    "frequency": "2D Fourier transform radial power spectrum in 6 concentric frequency bands + high/low ratio"
+  },
+  "fixed_order": [
+    "texture",
+    "colour",
+    "intensity",
+    "frequency",
+    "shape"
+  ],
+  "cheapest_order": [
+    "frequency",
+    "colour",
+    "intensity",
+    "texture",
+    "shape"
+  ],
+  "block_report": [
+    {
+      "block": "shape",
+      "n_features": 8,
+      "cost": 5.88,
+      "val_acc": 0.3546,
+      "test_acc": 0.3121,
+      "val_nll": 1.6282,
+      "test_nll": 1.6333,
+      "val_ece": 0.0555,
+      "test_ece": 0.0232
+    },
+    {
+      "block": "intensity",
+      "n_features": 10,
+      "cost": 2.84,
+      "val_acc": 0.7206,
+      "test_acc": 0.675,
+      "val_nll": 0.7392,
+      "test_nll": 0.7945,
+      "val_ece": 0.0498,
+      "test_ece": 0.0178
+    },
+    {
+      "block": "colour",
+      "n_features": 15,
+      "cost": 2.14,
+      "val_acc": 0.8119,
+      "test_acc": 0.8031,
+      "val_nll": 0.5145,
+      "test_nll": 0.4989,
+      "val_ece": 0.0251,
+      "test_ece": 0.0305
+    },
+    {
+      "block": "texture",
+      "n_features": 22,
+      "cost": 4.89,
+      "val_acc": 0.8255,
+      "test_acc": 0.806,
+      "val_nll": 0.4406,
+      "test_nll": 0.4954,
+      "val_ece": 0.0312,
+      "test_ece": 0.0207
+    },
+    {
+      "block": "frequency",
+      "n_features": 7,
+      "cost": 1.0,
+      "val_acc": 0.6591,
+      "test_acc": 0.6385,
+      "val_nll": 0.8828,
+      "test_nll": 1.0244,
+      "val_ece": 0.0541,
+      "test_ece": 0.0461
+    }
+  ],
+  "default_tau": 0.9,
+  "default_lambda": 0.01,
+  "all_blocks_cost": 16.75
+}

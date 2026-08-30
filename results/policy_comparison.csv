@@ -1,0 +1,6 @@
+Policy,Macro-F1,Accuracy,Mean Cost,Mean Blocks,Cost Saving (%)
+adaptive,0.882,0.8683,7.27,3.03,56.6
+fixed_best_first,0.8812,0.8669,10.8,3.19,35.5
+fixed_cheapest,0.8812,0.8669,9.64,3.5,42.4
+random_order,0.8812,0.8669,12.25,3.68,26.9
+all_blocks,0.8812,0.8669,16.75,5.0,0.0
