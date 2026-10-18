@@ -1,0 +1,7 @@
+block_name,median_cost_ms,mean_cost_ms,std_cost_ms,min_cost_ms,max_cost_ms,n_particles_profiled,repeats_per_particle,hardware_cpu,hardware_ram_gb,os,python_version,git_commit
+shape,6.722,13.3053,21.2546,4.3038,134.7824,60,3,"AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",N/A,Windows-11-10.0.26200-SP0,3.14.5,35396bcf13bb497c4c27c8af6b86e6e638199f03
+intensity,2.513,3.3372,3.5219,1.5994,24.8579,60,3,"AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",N/A,Windows-11-10.0.26200-SP0,3.14.5,35396bcf13bb497c4c27c8af6b86e6e638199f03
+colour,1.8887,12.4263,32.4396,0.6554,181.3454,60,3,"AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",N/A,Windows-11-10.0.26200-SP0,3.14.5,35396bcf13bb497c4c27c8af6b86e6e638199f03
+texture,4.3675,12.8333,25.0021,2.6543,124.6091,60,3,"AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",N/A,Windows-11-10.0.26200-SP0,3.14.5,35396bcf13bb497c4c27c8af6b86e6e638199f03
+frequency,1.0581,7.9914,22.7856,0.4029,129.3065,60,3,"AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",N/A,Windows-11-10.0.26200-SP0,3.14.5,35396bcf13bb497c4c27c8af6b86e6e638199f03
+full_feature_set,17.0586,51.1154,104.2779,11.0546,586.1439,60,3,"AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",N/A,Windows-11-10.0.26200-SP0,3.14.5,35396bcf13bb497c4c27c8af6b86e6e638199f03

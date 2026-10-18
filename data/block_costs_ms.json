@@ -1,0 +1,27 @@
+{
+  "block_costs_ms": {
+    "shape": 6.722,
+    "intensity": 2.513,
+    "colour": 1.8887,
+    "texture": 4.3675,
+    "frequency": 1.0581
+  },
+  "full_cost_ms": 17.0586,
+  "hardware": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+    "machine": "AMD64",
+    "python_version": "3.14.5",
+    "timestamp": "2026-10-16T17:26:36.717212+00:00",
+    "git_commit": "35396bcf13bb497c4c27c8af6b86e6e638199f03",
+    "ram_total_gb": "N/A",
+    "cpu_count_logical": 12,
+    "version_numpy": "2.5.2",
+    "version_scipy": "1.18.1",
+    "version_scikit-learn": "not_installed",
+    "version_skimage": "0.26.0",
+    "version_pandas": "3.0.5",
+    "version_cv2": "5.0.0",
+    "version_joblib": "1.5.3"
+  }
+}

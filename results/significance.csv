@@ -1,0 +1,4 @@
+model_a,model_b,mcnemar_chi2,mcnemar_p_value,mcnemar_b,mcnemar_c,delta_acc_mean,delta_acc_ci95,p_val_acc_boot,delta_f1_mean,delta_f1_ci95,p_val_f1_boot,delta_cost_mean_ms,delta_cost_ci95,p_val_cost_boot,git_commit,timestamp
+Config 2 (Context),Config 1 (Global),125.8265,0.0,26,193,-0.1196,"[-0.1396, -0.0995]",0.0,-0.1233,"[-0.1433, -0.1034]",0.0,0.883,"[0.665, 1.102]",0.0,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T23:54:10.945680
+Config 3 (Learned Stop),Config 2 (Fixed),2.202,0.137836,167,140,0.0194,"[-0.0050, 0.0444]",0.132,0.0225,"[-0.0020, 0.0470]",0.0762,-7.46,"[-7.819, -7.103]",0.0,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T23:55:38.014198
+Config 4 (OOD),Config 3 (No OOD),460.0022,0.0,0,462,-0.3309,"[-0.3558, -0.3064]",0.0,-0.2723,"[-0.2937, -0.2515]",0.0,0.0,"[0.000, 0.000]",1.0,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T23:57:08.168531

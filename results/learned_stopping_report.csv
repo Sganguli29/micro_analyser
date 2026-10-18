@@ -1,0 +1,5 @@
+model,label_option,optimal_threshold,test_accuracy,test_f1,test_auc,test_precision,test_recall,top_feature,git_commit,timestamp
+logistic_regression,b,0.5,0.9392,0.9631,0.9689,0.9634,0.9629,max_post,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T23:22:03.233837
+random_forest,b,0.45,0.9412,0.9644,0.9698,0.9623,0.9665,max_post,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T23:22:03.552714
+logistic_regression,a,0.45,0.9459,0.9658,0.9842,0.9556,0.9762,max_post,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-19T00:02:57.782881
+random_forest,a,0.4,0.9503,0.9692,0.9861,0.9426,0.9973,max_post,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-19T00:02:58.125462

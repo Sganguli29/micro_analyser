@@ -1,0 +1,178 @@
+% Auto-generated publication tables from microplastics_demo experimental results
+% Generated directly from code-computed CSV files in results/ (Zero manual transcription)
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{multirow}
+
+% Table 1: Dataset Partition Summary
+\begin{table}[ht]
+\centering
+\caption{Microplastic polymer dataset summary across group-stratified splits.}
+\label{tab:dataset_summary}
+\begin{tabular}{llll}
+\toprule
+metric_category & metric_name & value & unit \\
+\midrule
+metadata & git_commit & 35396bcf13bb497c4c27c8af6b86e6e638199f03 & hash \\
+metadata & timestamp_utc & 2026-10-16T17:23:55.303633+00:00 & iso8601 \\
+metadata & split_seed & 42 & integer \\
+dataset_totals & total_particles & 5680 & count \\
+dataset_totals & total_unique_source_slides & 1989 & count \\
+class_distribution & count_ABS & 1000 & count (17.61%) \\
+class_distribution & count_Nylon & 1000 & count (17.61%) \\
+class_distribution & count_PE & 1000 & count (17.61%) \\
+class_distribution & count_PET & 680 & count (11.97%) \\
+class_distribution & count_PS & 1000 & count (17.61%) \\
+class_distribution & count_PVC & 1000 & count (17.61%) \\
+split_sizes & train_crop_count & 3406 & count (59.96%) \\
+split_sizes & train_source_slide_count & 1192 & count \\
+split_sizes & val_crop_count & 877 & count (15.44%) \\
+split_sizes & val_source_slide_count & 299 & count \\
+split_sizes & test_crop_count & 1397 & count (24.6%) \\
+split_sizes & test_source_slide_count & 498 & count \\
+resolution_statistics & width_min & 24 & pixels \\
+resolution_statistics & width_max & 1280 & pixels \\
+resolution_statistics & width_mean & 104.95 & pixels \\
+resolution_statistics & width_median & 62.0 & pixels \\
+resolution_statistics & width_std & 115.07 & pixels \\
+resolution_statistics & height_min & 24 & pixels \\
+resolution_statistics & height_max & 960 & pixels \\
+resolution_statistics & height_mean & 99.25 & pixels \\
+resolution_statistics & height_median & 60.0 & pixels \\
+resolution_statistics & height_std & 101.69 & pixels \\
+resolution_statistics & area_min & 576 & pixels^2 \\
+resolution_statistics & area_max & 1122560 & pixels^2 \\
+resolution_statistics & area_mean & 20952.32 & pixels^2 \\
+resolution_statistics & area_median & 3720.0 & pixels^2 \\
+resolution_statistics & area_std & 59310.38 & pixels^2 \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+% Table 2: Wall-Clock Extraction Costs (ms)
+\begin{table}[ht]
+\centering
+\caption{Empirical wall-clock feature extraction time per particle (milliseconds).}
+\label{tab:block_costs}
+\begin{tabular}{}
+\toprule
+\midrule
+ \\
+ \\
+ \\
+ \\
+ \\
+ \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+% Table 3: Calibration Performance per Feature Block
+\begin{table}[ht]
+\centering
+\caption{Expected Calibration Error (15 bins), Brier score, and NLL before and after calibration.}
+\label{tab:calibration}
+\begin{tabular}{l}
+\toprule
+block \\
+\midrule
+shape \\
+intensity \\
+colour \\
+texture \\
+frequency \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+% Table 4: Morphology Audit: Bounding Box Crop vs Segmented Mask
+\begin{table}[ht]
+\centering
+\caption{Comparison of shape descriptors and classification accuracy computed from BBox crops vs. Otsu segmented masks.}
+\label{tab:morphology_audit}
+\begin{tabular}{r}
+\toprule
+mean_abs_diff \\
+\midrule
+NaN \\
+NaN \\
+NaN \\
+15625.8205 \\
+169.0470 \\
+0.3353 \\
+0.2211 \\
+0.2122 \\
+0.4387 \\
+0.0000 \\
+64.0895 \\
+69.6569 \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+% Table 5: Open-Set Leave-One-Polymer-Out (LOPO) Benchmark
+\begin{table}[ht]
+\centering
+\caption{Leave-One-Polymer-Out open-set polymer detection across 6 folds.}
+\label{tab:open_set_lopo}
+\begin{tabular}{lrrrrrr}
+\toprule
+method & auroc & aupr & fpr_at_95_tpr & unknown_detection_rate & false_unknown_rate & closed_set_accuracy \\
+\midrule
+dual_rule & 0.8180 & 0.7496 & 0.7173 & 0.3316 & 0.0616 & 0.8984 \\
+energy & 0.8758 & 0.8327 & 0.4986 & 0.5014 & 0.0505 & 0.8984 \\
+entropy & 0.8251 & 0.7651 & 0.6830 & 0.3170 & 0.0508 & 0.8984 \\
+mahalanobis & 0.7647 & 0.7409 & 0.6328 & 0.3672 & 0.0505 & 0.8984 \\
+msp & 0.8091 & 0.7257 & 0.7760 & 0.2240 & 0.0505 & 0.8984 \\
+openmax & 0.3034 & 0.3806 & 0.9255 & 0.0745 & 0.0506 & 0.8984 \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+% Table 6: System Configuration and Component Ablation Study
+\begin{table}[ht]
+\centering
+\caption{Ablation analysis of primary configurations and context prior components.}
+\label{tab:ablation_study}
+\begin{tabular}{lrrrrr}
+\toprule
+configuration & accuracy & macro_f1 & mean_cost_ms & mean_blocks & cost_saving_pct \\
+\midrule
+config_1_global_adaptive_fixed & 0.87 & 0.88 & 7.76 & 2.83 & 53.12 \\
+config_2_context_aware_fixed & 0.75 & 0.76 & 8.64 & 3.10 & 47.78 \\
+config_3_context_learned_stop & 0.77 & 0.78 & 1.18 & 1.00 & 92.84 \\
+config_4_full_pipeline_ood & 0.95 & 0.94 & 1.18 & 1.00 & 92.84 \\
+ablation_z_prior_only_no_z_eig & 0.75 & 0.76 & 8.64 & 3.10 & 47.78 \\
+ablation_drop_z_z_area & 0.76 & 0.78 & 8.72 & 3.13 & 47.29 \\
+ablation_drop_z_z_bbox_w & 0.75 & 0.76 & 8.65 & 3.11 & 47.70 \\
+ablation_drop_z_z_bbox_h & 0.74 & 0.75 & 8.66 & 3.11 & 47.66 \\
+ablation_drop_z_z_aspect_ratio & 0.74 & 0.75 & 8.67 & 3.11 & 47.63 \\
+ablation_drop_z_z_mean_brightness & 0.82 & 0.84 & 8.20 & 3.05 & 50.46 \\
+ablation_drop_z_z_fluorescence_occupancy & 0.77 & 0.78 & 8.68 & 3.13 & 47.58 \\
+ablation_drop_z_z_snr & 0.77 & 0.78 & 8.48 & 3.09 & 48.74 \\
+\bottomrule
+\end{tabular}
+
+\end{table}
+
+% Table 7: Statistical Hypothesis Testing (McNemar and 10,000 Paired Bootstraps)
+\begin{table}[ht]
+\centering
+\caption{Paired statistical tests between pipeline configurations.}
+\label{tab:significance}
+\begin{tabular}{llrrrlr}
+\toprule
+model_a & model_b & mcnemar_chi2 & mcnemar_p_value & delta_acc_mean & delta_acc_ci95 & delta_cost_mean_ms \\
+\midrule
+Config 2 (Context) & Config 1 (Global) & 125.8265 & 0.0000 & -0.1196 & [-0.1396, -0.0995] & 0.8830 \\
+Config 3 (Learned Stop) & Config 2 (Fixed) & 2.2020 & 0.1378 & 0.0194 & [-0.0050, 0.0444] & -7.4600 \\
+Config 4 (OOD) & Config 3 (No OOD) & 460.0022 & 0.0000 & -0.3309 & [-0.3558, -0.3064] & 0.0000 \\
+\bottomrule
+\end{tabular}
+
+\end{table}

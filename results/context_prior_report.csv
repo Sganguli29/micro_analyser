@@ -1,0 +1,4 @@
+experiment,feature_set,test_accuracy,test_macro_f1,test_nll,test_ece_15,test_brier,n_features,git_commit,timestamp
+Z_only_prior,7_context_descriptors,0.602,0.6141,1.0257,0.0322,0.5188,7,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T17:37:53.020829+00:00
+double_counting_ablation_option_a,shape_deduplicated_no_area_no_aspect_ratio,0.3049,0.3144,1.6721,,,6,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T17:37:53.320280+00:00
+double_counting_ablation_option_b,shape_full_retained_with_fusion_compensation,0.33,0.3375,1.6562,,,8,35396bcf13bb497c4c27c8af6b86e6e638199f03,2026-10-16T17:37:53.657088+00:00

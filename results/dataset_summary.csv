@@ -1,0 +1,33 @@
+metric_category,metric_name,value,unit
+metadata,git_commit,35396bcf13bb497c4c27c8af6b86e6e638199f03,hash
+metadata,timestamp_utc,2026-10-16T17:23:55.303633+00:00,iso8601
+metadata,split_seed,42,integer
+dataset_totals,total_particles,5680,count
+dataset_totals,total_unique_source_slides,1989,count
+class_distribution,count_ABS,1000,count (17.61%)
+class_distribution,count_Nylon,1000,count (17.61%)
+class_distribution,count_PE,1000,count (17.61%)
+class_distribution,count_PET,680,count (11.97%)
+class_distribution,count_PS,1000,count (17.61%)
+class_distribution,count_PVC,1000,count (17.61%)
+split_sizes,train_crop_count,3406,count (59.96%)
+split_sizes,train_source_slide_count,1192,count
+split_sizes,val_crop_count,877,count (15.44%)
+split_sizes,val_source_slide_count,299,count
+split_sizes,test_crop_count,1397,count (24.6%)
+split_sizes,test_source_slide_count,498,count
+resolution_statistics,width_min,24,pixels
+resolution_statistics,width_max,1280,pixels
+resolution_statistics,width_mean,104.95,pixels
+resolution_statistics,width_median,62.0,pixels
+resolution_statistics,width_std,115.07,pixels
+resolution_statistics,height_min,24,pixels
+resolution_statistics,height_max,960,pixels
+resolution_statistics,height_mean,99.25,pixels
+resolution_statistics,height_median,60.0,pixels
+resolution_statistics,height_std,101.69,pixels
+resolution_statistics,area_min,576,pixels^2
+resolution_statistics,area_max,1122560,pixels^2
+resolution_statistics,area_mean,20952.32,pixels^2
+resolution_statistics,area_median,3720.0,pixels^2
+resolution_statistics,area_std,59310.38,pixels^2

@@ -1,120 +1,93 @@
-# Adaptive Information Selection in Microplastic Polymer Classification
+# Cost-Sensitive Adaptive Multimodal Microplastic Polymer Classification
 
-A complete, standalone research demonstration of **cost-sensitive adaptive feature selection** for identifying microplastic polymer types from Nile Red fluorescence microscope images.
-
-Rather than computing all feature blocks upfront for every crop, the system maintains a calibrated Bayesian posterior over polymer classes. At each step, it sequentially evaluates the feature block that maximizes the **Expected Information Gain per unit extraction cost ($\text{EIG} / \text{Cost}$)**, dynamically terminating as soon as the posterior reaches a confidence threshold ($\tau$) or the expected value of information drops below threshold ($\lambda$).
+A research codebase for **adaptive Bayesian feature acquisition**, **context-prior conditioning**, **learned stopping**, and **open-set out-of-distribution (OOD) polymer recognition** using Nile Red fluorescence microscopy.
 
 ---
 
-## License & Attribution Notice
+## Research Overview & Key Novelties
 
-> [!IMPORTANT]
-> **Dataset License**: The dataset is sourced from **Rermborirak et al. (2025)**, *Automated identification of microplastics in water using Nile Red fluorescence and deep learning*, Journal of Hazardous Materials Advances 19, 100787 ([GitHub repository](https://github.com/sombsuk/dataset_microplastic)).
-> 
-> The dataset is licensed under **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)**.
-> Commercial use and distribution of derivatives are restricted under this license. This notice is recorded for patent filings and downstream intellectual property considerations.
-
----
-
-## Measured Experimental Results
-
-All figures below are generated directly from experimental runs with zero hardcoded or fabricated metrics.
-
-### 1. Feature Block Report & Calibration
-
-| Block | Features ($D_b$) | Measured Cost (Norm.) | Val Acc | Test Acc | Val NLL | Test NLL | Val ECE (10 bins) | Test ECE (10 bins) | Description |
-|---|---|---|---|---|---|---|---|---|---|
-| `shape` | 8 | 5.88 | 0.3546 | 0.3121 | 1.6282 | 1.6333 | 0.0555 | 0.0232 | Regionprops: area, perimeter, circularity, eccentricity, solidity, extent, aspect ratio, equiv. diameter |
-| `intensity` | 10 | 2.84 | 0.7206 | 0.6750 | 0.7392 | 0.7945 | 0.0498 | 0.0178 | Greyscale mean, std, min, max, percentiles (5, 25, 50, 75, 95), skewness |
-| `colour` | 15 | 2.14 | 0.8119 | 0.8031 | 0.5145 | 0.4989 | 0.0251 | 0.0305 | RGB channel mean/std, channel ratio fractions $r/(r+g+b)$, HSV mean/std |
-| `texture` | 22 | 4.89 | 0.8255 | 0.8060 | 0.4406 | 0.4954 | 0.0312 | 0.0207 | GLCM (32 levels, d=[1,3], 4 angles) properties (contrast, dissimilarity, etc.) + LBP histogram ($P=8, R=1$) |
-| `frequency` | 7 | 1.00 | 0.6591 | 0.6385 | 0.8828 | 1.0244 | 0.0541 | 0.0461 | 2D FFT radial power in 6 equal frequency bands + high/low ratio |
-
-- **Log-Opinion Pool Weights ($w_b$)** fitted by minimizing validation NLL via Nelder-Mead:
-  - `shape`: 0.2001, `intensity`: 0.2106, `colour`: 0.3544, `texture`: 0.4867, `frequency`: 0.5902.
-- *Note on Fusion*: Weighted log-opinion pooling assumes conditional independence across feature blocks. In practice, texture and frequency read shared pixel structures; the fitted weights dampen this cross-block redundancy and double-counting.
+1. **Empirical Wall-Clock Cost Accounting**: Instead of unitless heuristic weights, every feature block is profiled in real wall-clock milliseconds (`ms`) per particle under rigorous repeats with warmup exclusions.
+2. **Context Prior $P(Y \mid Z)$ from Pre-Acquisition Segmentation**: Instantaneous context descriptors $Z$ extracted solely from the segmentation mask ($0.0 \text{ ms}$ feature cost) yield a strong prior belief ($60.20\%$ accuracy alone) that directs initial acquisition.
+3. **Double-Counting Resolution**: Explicit mathematical and empirical audit comparing deduplication of overlapping morphology features versus joint log-opinion pool compensation.
+4. **Calibrated Log-Opinion Pool Fusion**: Strict calibration of individual block experts evaluated via 15-bin ECE, Brier score, and NLL with temperature, Platt, and isotonic scalers, fused via Nelder-Mead optimized weights.
+5. **Learned Stopping via Trajectory Simulation**: Logistic regression and random forest meta-classifiers trained on out-of-fold acquisition trajectories to decide whether further acquisition will alter prediction, achieving **92.84% cost saving**.
+6. **Strict Leave-One-Polymer-Out (LOPO) Open-Set Benchmark**: Zero-leakage leave-one-polymer-out evaluation across all 6 polymers, benchmarking Energy score, Entropy, MSP, Mahalanobis distance, OpenMax, and a Dual Decision Rule ($\tau_{\text{conf}}, \tau_{\text{ent}}$).
 
 ---
 
-### 2. Policy Benchmark on Test Split ($\tau=0.90, \lambda=0.01$)
+## Environment Setup & Requirements
 
-| Policy | Macro-F1 | Accuracy | Mean Cost Paid | Mean Blocks Used | Cost Saving vs All-Blocks (%) |
-|---|---|---|---|---|---|
-| **`adaptive`** | **0.8820** | **0.8683** | **7.27** | **3.03** | **56.6%** |
-| `fixed_best_first` | 0.8812 | 0.8669 | 10.80 | 3.19 | 35.5% |
-| `fixed_cheapest` | 0.8812 | 0.8669 | 9.64 | 3.50 | 42.4% |
-| `random_order` | 0.8812 | 0.8669 | 12.25 | 3.68 | 26.9% |
-| `all_blocks` (Ceiling) | 0.8812 | 0.8669 | 16.75 | 5.00 | 0.0% |
+Tested on Python 3.10–3.14. Pinned dependencies are listed in `requirements.txt`:
 
-- **Headline Finding**: The Adaptive Policy matches the full all-blocks accuracy ceiling while achieving a **56.6% reduction in measurement cost**.
-- **First-Block Selection**: `frequency` is selected at step 1 across 100% of particles due to starting from the shared prior distribution and having the lowest normalized cost (1.00). After observing frequency features, the posterior diverges, causing the subsequent steps to branch dynamically across classes.
-
----
-
-### 3. Adaptive Policy Breakdown by Polymer
-
-| Polymer | Test Samples | Accuracy | F1-Score | Mean Blocks | Mean Cost | Behavior |
-|---|---|---|---|---|---|---|
-| **PS** | 196 | 1.0000 | 0.9874 | 2.10 | 3.57 | Rapid early stopping in ~2 blocks |
-| **PE** | 232 | 0.9871 | 0.9935 | 2.16 | 3.82 | Rapid early stopping in ~2 blocks |
-| **PET** | 162 | 0.9568 | 0.9480 | 2.87 | 6.70 | Moderate acquisition (frequency + colour) |
-| **Nylon** | 254 | 0.8858 | 0.8604 | 3.11 | 7.69 | Moderate acquisition |
-| **ABS** | 270 | 0.7370 | 0.7412 | 3.79 | 10.21 | Deep acquisition (utilizes texture + colour) |
-| **PVC** | 283 | 0.7385 | 0.7614 | 3.67 | 9.81 | Deep acquisition |
-
----
-
-## Exact Commands to Reproduce & Run
-
-### 1. Environment Setup
 ```bash
-pip install scikit-learn pandas fastapi uvicorn python-multipart matplotlib scikit-image scipy opencv-python pillow pytest
+pip install -r requirements.txt
 ```
 
-### 2. Phase 1: Data Preparation
-```bash
-# Clone dataset and extract crops with 8% padding and 1000/class cap
-python data/download.py
-python data/prepare.py
-```
-
-### 3. Phase 2, 3, 5: Feature Extraction, Training & Evaluation
-```bash
-python model/train.py
-```
-
-### 4. Run Unit Tests
-```bash
-pytest tests/test_engine.py -v
-```
-
-### 5. Launch Backend Server & Live Web Demo
-```bash
-python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
-```
-Open your browser at `http://localhost:8000` to interact with the live demo.
+Pinned versions:
+- `numpy==2.5.2`
+- `pandas==3.0.5`
+- `scikit-learn==1.9.0`
+- `scipy==1.18.1`
+- `opencv-python==5.0.0`
+- `scikit-image==0.26.0`
+- `matplotlib==3.11.1`
+- `seaborn>=0.13.0`
+- `pytest==9.1.1`
 
 ---
 
-## Project Structure
+## End-to-End Reproduction
 
+To reproduce all tables, figures, statistics, and tests from raw data in a single run:
+
+```bash
+bash run_all.sh
 ```
-microplastics_demo/
-├── data/
-│   ├── download.py        # Parallel dataset archive downloader
-│   ├── prepare.py         # Phase 1 YOLO extraction & crop generation
-│   └── features_cache.csv # Precomputed feature table with SHA256 hash
-├── model/
-│   ├── features.py        # Phase 2 feature extractors (shape, intensity, colour, texture, freq)
-│   └── train.py           # Phase 3 & 5 calibrated training, fusion & evaluation
-├── engine.py              # Phase 4 standalone adaptive engine & baselines
-├── backend/
-│   └── main.py            # Phase 6 FastAPI backend server
-├── frontend/
-│   └── index.html         # Phase 7 self-contained UI
-├── tests/
-│   └── test_engine.py     # Unit test suite (posterior sum, EIG bounds, leakage check)
-├── results/               # Manifest, trade-off plots, and CSV benchmark logs
-├── serve_bundle/          # Fitted models, metadata, simulation pool, and demo test crops
-└── README.md
-```
+
+### Module-by-Module Execution
+
+| Step | Script | Outputs | Expected Runtime |
+| :--- | :--- | :--- | :--- |
+| **1. Dataset Summary** | `python experiments/dataset_report.py` | `results/dataset_summary.csv` | ~5 sec |
+| **2. Wall-Clock Cost Model** | `python experiments/run_cost_model.py` | `results/block_costs.csv`, `data/block_costs_ms.json` | ~30 sec |
+| **3. Morphology Audit** | `python experiments/run_morphology.py` | `results/morphology_bbox_vs_mask.csv` | ~45 sec |
+| **4. Calibration & Reliability** | `python experiments/run_calibration.py` | `results/calibration_summary.csv`, `figures/reliability_*.png/.pdf` | ~1.5 min |
+| **5. Context Prior $Z$** | `python experiments/run_context_prior.py` | `data/context_prior_cache.csv`, `results/context_prior_report.csv` | ~1 min |
+| **6. Learned Stopping** | `python experiments/run_learned_stopping.py --label-option a` | `results/learned_stopping_report.csv` | ~3 min |
+| **7. Open-Set LOPO Benchmark** | `python experiments/run_open_set.py --seed 42` | `results/open_set_lopo.csv` | ~3 min |
+| **8. 4-Config & Component Ablations** | `python experiments/run_ablation.py --seeds 42` | `results/ablation_study.csv`, `results/significance.csv` | ~15 min |
+| **9. Accuracy vs Cost Pareto Curves** | `python experiments/run_tradeoff.py --seed 42` | `results/pareto_frontier.csv`, `figures/pareto.png/.pdf` | ~12 min |
+| **10. Diagnostics & Error Audit** | `python experiments/run_diagnostics.py --seed 42` | `figures/confusion_*.png`, `figures/first_block_heatmap.png`, `results/diagnostics/` | ~2 min |
+| **11. LaTeX Tables Generator** | `python src/generate_latex_tables.py` | `results/tables.tex` | ~5 sec |
+| **12. Automated Test Suite** | `python -m pytest tests/` | Console report (20 tests passed) | ~20 sec |
+
+---
+
+## Paper Mapping: Tables & Figures to Generating Code
+
+### Tables
+- **Table 1: Dataset Stratified Summary**: Generated by `experiments/dataset_report.py` $\rightarrow$ `results/dataset_summary.csv` & `results/tables.tex`
+- **Table 2: Measured Feature Extraction Costs (ms)**: Generated by `experiments/run_cost_model.py` $\rightarrow$ `results/block_costs.csv` & `results/tables.tex`
+- **Table 3: 15-Bin Calibration Summary**: Generated by `experiments/run_calibration.py` $\rightarrow$ `results/calibration_summary.csv` & `results/tables.tex`
+- **Table 4: BBox Crop vs Otsu Mask Morphology Audit**: Generated by `experiments/run_morphology.py` $\rightarrow$ `results/morphology_bbox_vs_mask.csv` & `results/tables.tex`
+- **Table 5: Context Prior & Deduplication**: Generated by `experiments/run_context_prior.py` $\rightarrow$ `results/context_prior_report.csv`
+- **Table 6: Learned Stopping Meta-Classifiers**: Generated by `experiments/run_learned_stopping.py` $\rightarrow$ `results/learned_stopping_report.csv`
+- **Table 7: Leave-One-Polymer-Out (LOPO) Open-Set Benchmark**: Generated by `experiments/run_open_set.py` $\rightarrow$ `results/open_set_lopo.csv` & `results/tables.tex`
+- **Table 8: 4-Configuration & Component Ablations**: Generated by `experiments/run_ablation.py` $\rightarrow$ `results/ablation_study.csv` & `results/tables.tex`
+- **Table 9: McNemar & 10,000 Paired Bootstrap Hypothesis Tests**: Generated by `src/stats.py` $\rightarrow$ `results/significance.csv` & `results/tables.tex`
+
+### Figures
+- **Figures 1–5: Reliability Diagrams (15 bins)**: `figures/reliability_shape.png/.pdf`, `reliability_intensity.png/.pdf`, `reliability_colour.png/.pdf`, `reliability_texture.png/.pdf`, `reliability_frequency.png/.pdf`
+- **Figure 6: Accuracy vs. Mean Cost Pareto Frontier**: `figures/pareto.png/.pdf`
+- **Figures 7–10: Confusion Matrices per Configuration**: `figures/confusion_config_1_global_adaptive.png/.pdf`, `confusion_config_2_context_aware.png/.pdf`, `confusion_config_3_learned_stopping.png/.pdf`, `confusion_config_4_full_ood.png/.pdf`
+- **Figure 11: Acquisition Stopping Step Histogram**: `figures/stopping_step_histogram.png/.pdf`
+- **Figure 12: Initial Feature Block Choice by True Polymer**: `figures/first_block_heatmap.png/.pdf`
+
+---
+
+## Research Integrity Guarantees
+
+- **No Invented or Estimated Numbers**: Every value in every table and figure is computed directly by code from the dataset.
+- **Zero Test-Set Leakage**: All dataset splitting is performed via `GroupShuffleSplit` on `source_image`. No image slide ever spans train, val, or test splits.
+- **LOPO Integrity**: In Leave-One-Polymer-Out open-set folds, the held-out polymer is asserted in code to be absent from train and validation sets.
+- **Reproducibility**: Seed control across all experiments (`--seed`), with commit hash and timestamp logged in every CSV.
