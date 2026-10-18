@@ -180,11 +180,12 @@ class Trajectories:
     The acquisition order never depends on the stopping rule, so each particle's path is computed once
     (all five blocks) and any stopping rule is applied afterwards by choosing the first step at which it
     fires. Index k = 0..4 means k+1 blocks acquired. Arrays: P, logit [N,5,K]; cost [N,5]; S [N,5,D]."""
-    def __init__(self, probs, Z, *, fusion, eig, costs, use_context, upfront_cost):
+    def __init__(self, probs, Z, *, fusion, eig, costs, use_context, upfront_cost, order=None):
+        """order: None for EIG/Cost; otherwise a function i -> list of the five blocks (fixed or random orders)."""
         N = len(Z)
         K = len(fusion.lp)
         self.P = np.zeros((N, 5, K)); self.logit = np.zeros((N, 5, K))
-        self.cost = np.zeros((N, 5)); self.first = []
+        self.cost = np.zeros((N, 5)); self.first = []; self.order = []
         S = []
         for i in range(N):
             row = {b: probs[b][i] for b in probs}
@@ -193,9 +194,13 @@ class Trajectories:
             cum = upfront_cost
             logit = fusion.logits(row, acquired)
             si = []
+            fixed = order(i) if order is not None else None
             for k in range(5):
-                sc = eig.scores(logit, remaining, costs)
-                b = max(remaining, key=lambda q: sc[q])
+                if fixed is None:
+                    sc = eig.scores(logit, remaining, costs)
+                    b = max(remaining, key=lambda q: sc[q])
+                else:
+                    b = fixed[k]
                 remaining.remove(b); acquired.append(b); cum += costs[b]
                 if k == 0:
                     self.first.append(b)
@@ -204,6 +209,7 @@ class Trajectories:
                 self.P[i, k] = P; self.logit[i, k] = logit; self.cost[i, k] = cum
                 si.append(state_vector(P, k + 1, cum, len(remaining), Z[i]))
             S.append(si)
+            self.order.append([a for a in acquired if a != "context"])
         self.S = np.array(S)
         self.N = N
         self._prob_cache = {}
