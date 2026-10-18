@@ -1,0 +1,29 @@
+{
+ "git_commit": "64f3c2a06e5540c33e2001b87e4406b499e5f2fd",
+ "timestamp": "2026-10-18T20:13:34.076093",
+ "features": "data/features_cache.csv",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "delta": 0.01,
+ "costs": {
+  "shape": 2.133,
+  "intensity": 1.3587,
+  "colour": 1.0686,
+  "texture": 2.3639,
+  "frequency": 0.3432
+ },
+ "seg_ms": 0.1813,
+ "z_ms": 0.1356,
+ "n_features": {
+  "shape": 8,
+  "intensity": 10,
+  "colour": 15,
+  "texture": 22,
+  "frequency": 7
+ }
+}
