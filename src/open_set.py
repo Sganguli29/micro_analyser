@@ -121,21 +121,20 @@ class OpenMaxDetector:
         return self
 
     def predict_unknown_prob(self, X: np.ndarray) -> np.ndarray:
+        """Unknown probability = Weibull CDF of the distance to the MAV of the *predicted* class.
+        (Previously the CDFs of all classes were averaged, so a known particle far from the other
+        classes' MAVs scored as unknown and the AUROC fell below chance.)"""
         unknown_probs = []
-        for i in range(len(X)):
-            x = X[i]
-            w_scores = []
-            for k, mav in self.mavs.items():
-                d = np.linalg.norm(x - mav)
-                if k in self.weibull_models and self.weibull_models[k] is not None:
-                    shape, loc, scale = self.weibull_models[k]
-                    # Probability of being an outlier under Weibull CDF
-                    w = stats.weibull_min.cdf(d, shape, loc=loc, scale=scale)
-                    w_scores.append(w)
-                else:
-                    w_scores.append(0.5)
-            # OpenMax unknown score is the average or max tail probability
-            unknown_probs.append(float(np.mean(w_scores)) if len(w_scores) > 0 else 0.5)
+        keys = list(self.mavs.keys())
+        for x in X:
+            dists = {k: np.linalg.norm(x - self.mavs[k]) for k in keys}
+            k_pred = keys[int(np.argmax(x))] if len(x) == len(keys) else min(dists, key=dists.get)
+            wb = self.weibull_models.get(k_pred)
+            if wb is None:
+                unknown_probs.append(0.5)
+                continue
+            shape, loc, scale = wb
+            unknown_probs.append(float(stats.weibull_min.cdf(dists[k_pred], shape, loc=loc, scale=scale)))
         return np.array(unknown_probs, dtype=np.float64)
 
 def run_lopo_open_set_evaluation(

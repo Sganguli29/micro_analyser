@@ -1,0 +1,17 @@
+{
+ "block_costs_ms": {
+  "shape": 2.133,
+  "intensity": 1.3587,
+  "colour": 1.0686,
+  "texture": 2.3639,
+  "frequency": 0.3432
+ },
+ "segmentation_ms": 0.1813,
+ "context_z_ms": 0.1356,
+ "hardware": {
+  "os": "Linux-6.18.44-fc-v139-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "cpus": 2,
+  "python": "3.13.16"
+ }
+}
