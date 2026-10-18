@@ -22,6 +22,7 @@ from pathlib import Path
 import sys
 import argparse
 import datetime
+from typing import List, Optional
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
