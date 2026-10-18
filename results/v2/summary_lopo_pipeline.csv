@@ -1,0 +1,5 @@
+,unknown_detect,unknown_detect,false_unknown,false_unknown,accepted_acc,accepted_acc,mean_cost_ms,mean_cost_ms,mean_blocks,mean_blocks
+,mean,std,mean,std,mean,std,mean,std,mean,std
+method,,,,,,,,,,
+dual,0.1922,0.0877,0.0883,0.0172,0.9041,0.0386,2.3419,0.4833,2.0242,0.4187
+energy,0.1739,0.108,0.0413,0.0213,0.8878,0.0435,2.3419,0.4833,2.0242,0.4187

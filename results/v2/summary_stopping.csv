@@ -1,0 +1,5 @@
+,threshold,threshold,accuracy,accuracy,f1,f1,auc,auc,recall,recall,specificity,specificity,stop_label_rate,stop_label_rate
+,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std,mean,std
+model,,,,,,,,,,,,,,
+logistic_regression,0.9,0.0612,0.8169,0.0485,0.8858,0.0369,0.9308,0.0123,0.8036,0.0647,0.9182,0.0859,0.8998,0.0282
+random_forest,0.65,0.1,0.8395,0.0425,0.9014,0.0311,0.9426,0.0073,0.828,0.0543,0.9244,0.0553,0.8998,0.0282
