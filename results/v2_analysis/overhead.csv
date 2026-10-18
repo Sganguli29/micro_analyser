@@ -1,0 +1,8 @@
+component,ms
+"EIG/Cost scoring, 5 candidate blocks",0.4614240000364589
+"EIG/Cost scoring, 2 candidate blocks",0.2683630000319681
+Fusion update (log-opinion pool),0.04671099998176942
+"Stopping RF (300 trees), n_jobs=2",65.39102850013023
+"Stopping RF (300 trees), n_jobs=1",17.549657000131447
+Stopping logistic regression,0.2428575000976707
+Confidence threshold test,0.004257499995219405
